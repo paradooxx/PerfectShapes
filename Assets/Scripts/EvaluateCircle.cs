@@ -9,10 +9,12 @@ public class EvaluateCircle : MonoBehaviour
     private float totalRadius = 0f;
     private Vector2 center = Vector2.zero;
 
-    public void EvalCircle(List<Vector2> drawPoints, TMP_Text statusText)
+    public void EvalCircle(List<Vector2> drawPoints, TMP_Text statusText, LineRenderer lineRenderer)
     {
         if (drawPoints.Count == 0) return;
 
+        lineRenderer.startColor = Color.white;
+        lineRenderer.endColor = Color.white;
         totalRadius = 0;
 
         Vector2 drawnCenter = NewCenter(drawPoints);
@@ -42,6 +44,28 @@ public class EvaluateCircle : MonoBehaviour
         
         float percentage = (fullRadius - totalRadius) / fullRadius * 100;
         statusText.text = percentage.ToString("F2") + " %";
+
+        SetColor(percentage, lineRenderer);
+
+    }
+
+    private void SetColor(float score, LineRenderer lineRenderer)
+    {
+        if (score > 70)
+        {
+            lineRenderer.startColor = Color.green;
+            lineRenderer.endColor = Color.green;
+        }
+        else if (score <= 70 && score > 35)
+        {
+            lineRenderer.startColor = Color.yellow;
+            lineRenderer.endColor = Color.yellow;
+        }
+        else
+        {
+            lineRenderer.startColor = Color.red;
+            lineRenderer.endColor = Color.red;
+        }
     }
 
     private Vector2 NewCenter(List<Vector2> points)
@@ -72,7 +96,7 @@ public class EvaluateCircle : MonoBehaviour
     private bool IsFullCircle(List<Vector2> drawPoints)
     {
         float flDistance = Vector2.Distance(drawPoints[0], drawPoints[drawPoints.Count - 1]);
-        return flDistance <= 0.15f;
+        return flDistance <= 0.1f;
     }
 
     private bool IsPointCircle(List<Vector2> drawPoints)

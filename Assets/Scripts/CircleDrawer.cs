@@ -34,7 +34,7 @@ public class CircleDrawer : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            evaluateCircle.EvalCircle(drawPoints, statusText);
+            evaluateCircle.EvalCircle(drawPoints, statusText, lineRenderer);
         }
     }
 }
